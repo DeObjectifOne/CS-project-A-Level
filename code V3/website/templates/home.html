@@ -1,0 +1,97 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %}
+
+{% block content %}
+
+<br><br>
+<h1 align="center"><b>Schedule</b></h1>
+<ul class="list-group list-group-flush" id="schedule">
+    {% for task in user.tasks %}
+        <li class="list-group-item">
+            <b>Task: </b> {{task.task}} <b>|</b>
+            <b>Details:</b> {{ task.data}} <b>|</b>
+            <b>Duration (In minutes): </b> {{task.duration}} <b>|</b>
+            <b>Date of completion: </b> {{task.completion_date}} <b>|</b>
+            <b>Priority: </b> {{task.priority}}
+            <button type="button" class="close" onClick="deleteTask({{ task.id }})">
+                <span aria-hidden="true">&times;</span> 
+            </button>
+        </li>
+    {% endfor %}
+</ul>
+
+<!--Used to input a task-->
+<br><br>
+<form method="POST">
+    <div class="form-group" 
+        style="border: 
+        1px solid #ced4da; 
+        padding: 15px; 
+        border-radius: 5px;"
+    >
+        <label for="task"><b>Task</b></label>
+        <input 
+            name="task" 
+            id="task" 
+            class="form-control"
+            required
+        >
+        <br><br>
+        <label for="details"><b>Task Details</b></label>
+        <textarea 
+            name="details" 
+            id="details" 
+            class="form-control"
+            placeholder="enter your task here"
+            rows="3"
+            required>
+        </textarea>
+        <!--Additional fields grouped below the task input-->
+        <div class="row mt-3">
+            <!--Used to input the time duration-->
+            <div class="col-md-4">
+                <label for="duration"><b>Duration (in minutes)</b></label>
+                <input 
+                    type="number" 
+                    name="duration" 
+                    id="duration" 
+                    class="form-control"
+                    placeholder="Task Duration"
+                    required
+                >
+            </div>
+            <!--Used to input the time/date of completion-->
+            <div class="col-md-4">
+                <label for="datetime"><b>Date of completion</b></label>
+                <input 
+                    type="datetime-local" 
+                    name="datetime" 
+                    id="datetime" 
+                    class="form-control"
+                    required
+                >
+            </div>
+            <!--Used to input the task priority-->
+            <div class="col-md-4">
+                <label for="datetime"><b>Priority</b></label>
+                <select 
+                    name="priority" 
+                    id="priority" 
+                    class="form-control" 
+                    placeholder="Priority"
+                    required
+                >
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!--Submit Button-->
+    <div align="center">
+        <button type="submit" class="btn btn-primary">Add task</button>
+    </div>
+</form>
+
+{% endblock %}

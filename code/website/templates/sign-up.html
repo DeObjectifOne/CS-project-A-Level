@@ -1,0 +1,62 @@
+{% extends "base.html" %} 
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<form method="POST">
+    <br><br>
+    <h3 align="center">Sign Up</h3>
+    <br><br>
+    <div class="form-group"> <!--Makes it easier to add structure to forms-->
+        <!--Used to input your full name-->
+        <label for="fullname">Full Name</label>
+        <input 
+            type="text" 
+            class="form-control" 
+            id="fullname" 
+            name="fullname" 
+            placeholder="Enter your Full Name" 
+        />
+    </div>
+    <div class="form-group"> 
+        <!--Used to input your email-->
+        <label for="email">Email Address</label>
+        <input 
+            type="email" 
+            class="form-control" 
+            id="email" 
+            name="email" 
+            placeholder="Enter your Email" 
+        />
+    </div>
+    <div class="form-group"> 
+        <!--Used to input your password-->
+        <label for="password">Password</label>
+        <input 
+            type="password" 
+            class="form-control" 
+            id="password1" 
+            name="password1" 
+            placeholder="Enter your password" 
+        />
+    </div>
+    <div class="form-group"> 
+        <!--Used to reinput the password for confirmation-->
+        <label for="password2">Password Confirmation</label>
+        <input 
+            type="password" 
+            class="form-control" 
+            id="password2" 
+            name="password2" 
+            placeholder="Re-enter your password" 
+        />
+    </div>
+    <br><br>
+    <!--Code for the submit button-->
+    <div class="d-flex justify-content-center"> <!--Aligns the code in the center horizontally-->
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+    </div>
+</form>
+{% endblock %}
+
+<!--Most pages agree the code is ai generated, so reformat/redo it later-->

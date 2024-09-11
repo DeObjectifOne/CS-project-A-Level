@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <!--Bootstrap CSS: uses BootStrap to handle CSS from a different origin-->
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+            crossorigin="anonymous"
+        />
+        <!--Font Awesome CSS: Provides a library of icons that can be used-->
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+            crossorigin="anonymous"
+        />
+        <title>{% block title %}Home{% endblock %}</title>
+    </head>
+    <body>
+    <!--Responsible for styalizing the navigation bar at the top of the page-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbar"
+            >
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar">
+        <div class="container-fluid">
+            <div class="row w-100">
+                {% if user.is_authenticated %}
+                <div>
+                    <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+                </div>
+                    <!--Search bar option-->
+                    <div class="col-md-6 d-flex justify_content-center align-items-center">
+                    <div class="input-group">
+                        <input
+                            type="text"
+                            id="search"
+                            class="form-control"
+                            placeholder="Search for your tasks..."
+                        >
+                    <div class="input-group-append">
+                        <button
+                            class="btn btn-primary"
+                            id="searchButton"
+                            type="button"
+                            >   
+                        </button>
+                    </div>
+                </div>
+                {% else %}
+                <div>
+                    <a class="nav-item nav-link" id="login" href="/login">Login</a>
+                    <a class="nav-item nav-link" id="signUp" href="/sign-up">Sign Up</a>
+                </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!--Used to display error messages if something was filled in incorrectly-->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            {% if category == 'error' %}
+            <div class="alert alert-danger alert-dismissable fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% elif category == 'success' %}
+            <div class="alert alert-success alert-dismissable fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endif%}
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <!--Used to center everything correctly-->
+    <div class="container"> {% block content %} {% endblock %}</div>
+        <!--jQuery library: used for styalization and animations-->
+        <script
+            src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"
+        ></script>
+        <!--Popper.js: used to position tooltips and dropdown components-->
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"
+        ></script>
+        <!--Bootstrap JavaScript: imports JavaScript's 'interactivity'-->
+        <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            type="text/javascript"
+            src="{{ url_for('static', filename='index.js')}}"
+        ></script>
+        <!--Search bar code-->
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                //takes the user search term as constant
+                const search_input = document.getElementById('search');
+                //the code looks at all elements under the id: schedule
+                const schedule = document.getElemenntById('schedule');
+                //the code then checks all elements under the <li> tags under 'schedule'
+                const list_item = schedule.getElementsByTagName('li');
+            
+                search_input.addEventListener('input', function () {
+                // converts all terms to lower case for ease of search
+                const word = search_input.value.toLowerCase();
+                // used  to determine list length and the search loop
+                for (let i = 0; i < list_item.length; i++) {
+                    //used to search and compare the search term to the task and details variables
+                    const task_text = list_item.innerHTML.toLowerCase();
+                    //used to check if either the task or details are included within the search term
+                    if (task_text.includes(word)) {
+                    // used to clear the search bar
+                    list_item.style.display='';
+                    } else {
+                    // used to show that the search term could not be found
+                    list_item.style.display = 'none';
+                    }
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
