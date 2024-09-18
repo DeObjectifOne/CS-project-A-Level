@@ -8,7 +8,7 @@ from flask_migrate import Migrate
 #creation of the database
 db = SQLAlchemy()
 DB_NAME = "database.db"
-migrate = Migrate(db)
+migrate = Migrate()
 
 #used to both instantiate flask + creating a secret key for the website
 def create_app():
@@ -38,8 +38,3 @@ def create_app():
          return User.query.get(int(id))
 
     return app
-
-def create_database(app):
-     if not path.exists('website/' + DB_NAME):
-          db.create_all(app=app)
-          print("Database has been initialized")

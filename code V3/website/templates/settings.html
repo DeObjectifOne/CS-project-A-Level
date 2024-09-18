@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Settings{% endblock %}
+
+{% block content %}
+<form method="POST" action="/save-mode">
+    <div class="form-container">
+        <div class="form-box">
+            <br><br>
+            <h3 align="center"><b>Settings</b></h3>
+            <br><br>
+            <div class="form-group">
+                <label for="mode"><b>Select Theme Mode:</b></label>
+                <select id="mode" name="mode">
+                    <option value="light" {% if not user.dark_mode %}selected{% endif %}>Light Mode</option>
+                    <option value="dark" {% if user.dark_mode %}selected{% endif %}>Dark Mode</option>
+                </select>
+                <div align="center">
+                    <button type="submit" class="btn btn-primary">Apply changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- CSS code -->
+<style>
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .form-box {
+        border: 2px solid #ccc;
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 400px;
+        width: 100%;
+    }
+
+    h3 {
+        text-align: center;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    label, select, button {
+        padding: 10px;
+        margin: 10px;
+        width: 100%;
+        max-width: 300px;
+        border-radius: 5px;
+    }
+
+    select {
+        height: 40px;
+        border: 1px solid #ccc;
+    }
+
+    button {
+        background-color: #4caf50;
+        color: white;
+        cursor: pointer;
+        border: none;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+</style>
+{% endblock %}

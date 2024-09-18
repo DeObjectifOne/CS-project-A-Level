@@ -12,7 +12,7 @@
             <b>Duration (In minutes): </b> {{task.duration}} <b>|</b>
             <b>Date of completion: </b> {{task.completion_date}} <b>|</b>
             <b>Priority: </b> {{task.priority}}
-            <button type="button" class="close" onClick="deleteTask({{ task.id }})">
+            <button type="button" class="close" onclick="deleteTask({{ task.id }});">
                 <span aria-hidden="true">&times;</span> 
             </button>
         </li>
@@ -64,8 +64,8 @@
                 <label for="datetime"><b>Date of completion</b></label>
                 <input 
                     type="datetime-local" 
-                    name="datetime" 
-                    id="datetime" 
+                    name="completion_date" 
+                    id="completion_date" 
                     class="form-control"
                     required
                 >

@@ -18,50 +18,30 @@
             crossorigin="anonymous"
         />
         <title>{% block title %}Home{% endblock %}</title>
+        <!--Used to display the chosen user coloured background for all webpages-->
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     </head>
-    <body>
+    <body class="{% if current_user.dark_mode %}dark-mode{% else %}light-mode{% endif %}">
     <!--Responsible for styalizing the navigation bar at the top of the page-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbar"
-            >
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbar">
-        <div class="container-fluid">
-            <div class="row w-100">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbar"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar">
+            <div class="navbar-nav">
                 {% if user.is_authenticated %}
-                <div>
-                    <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
-                </div>
-                    <!--Search bar option-->
-                    <div class="col-md-6 d-flex justify_content-center align-items-center">
-                    <div class="input-group">
-                        <input
-                            type="text"
-                            id="search"
-                            class="form-control"
-                            placeholder="Search for your tasks..."
-                        >
-                    <div class="input-group-append">
-                        <button
-                            class="btn btn-primary"
-                            id="searchButton"
-                            type="button"
-                            >   
-                        </button>
-                    </div>
-                </div>
+                <a class="nav-item nav-link" id="home" href="/">Home</a>
+                <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+                <a class="nav-item nav-link" id="settings" href="/settings">Settings</a>
                 {% else %}
-                <div>
-                    <a class="nav-item nav-link" id="login" href="/login">Login</a>
-                    <a class="nav-item nav-link" id="signUp" href="/sign-up">Sign Up</a>
-                </div>
+                <a class="nav-item nav-link" id="login" href="/login">Login</a>
+                <a class="nav-item nav-link" id="signUp" href="/sign-up">Sign Up</a>
                 {% endif %}
-                </div>
             </div>
         </div>
     </nav>
@@ -88,7 +68,7 @@
     {% endif %}
     {% endwith %}
     <!--Used to center everything correctly-->
-    <div class="container"> {% block content %} {% endblock %}</div>
+    <div class="container">{% block content %} {% endblock %}</div>
         <!--jQuery library: used for styalization and animations-->
         <script
             src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -107,38 +87,10 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"
         ></script>
+        <!--Used to import JavaScript functions-->
         <script
             type="text/javascript"
             src="{{ url_for('static', filename='index.js')}}"
         ></script>
-        <!--Search bar code-->
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                //takes the user search term as constant
-                const search_input = document.getElementById('search');
-                //the code looks at all elements under the id: schedule
-                const schedule = document.getElemenntById('schedule');
-                //the code then checks all elements under the <li> tags under 'schedule'
-                const list_item = schedule.getElementsByTagName('li');
-            
-                search_input.addEventListener('input', function () {
-                // converts all terms to lower case for ease of search
-                const word = search_input.value.toLowerCase();
-                // used  to determine list length and the search loop
-                for (let i = 0; i < list_item.length; i++) {
-                    //used to search and compare the search term to the task and details variables
-                    const task_text = list_item.innerHTML.toLowerCase();
-                    //used to check if either the task or details are included within the search term
-                    if (task_text.includes(word)) {
-                    // used to clear the search bar
-                    list_item.style.display='';
-                    } else {
-                    // used to show that the search term could not be found
-                    list_item.style.display = 'none';
-                    }
-                    }
-                });
-            });
-        </script>
     </body>
 </html>
